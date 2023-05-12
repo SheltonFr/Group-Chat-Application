@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502748746685",
+    "project_id": "group-chat-application-pdm",
+    "storage_bucket": "group-chat-application-pdm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502748746685:android:3af9a7ae8f66a4e5c4b8d4",
+        "android_client_info": {
+          "package_name": "dev.isutc.chatapplications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502748746685-gqjhjb69ia54s7in8kh55cue65ccphlp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Y8YG1D_0OXhz57yMLxkwP_bIYn50axI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502748746685-gqjhjb69ia54s7in8kh55cue65ccphlp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
