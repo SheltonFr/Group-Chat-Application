@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.SignFragment"
+    tools:context=".ui.fragments.SignUpFragment"
     android:paddingHorizontal="20dp">
 
-    <ImageView
+    <ImageButton
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="169dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="52dp"
-        app:srcCompat="@drawable/logo_icon" />
+        android:background="@drawable/button_photo_rounded_shape"
+        android:src="@drawable/baseline_camera_alt_24"
+        />
 
 
     <EditText
@@ -32,6 +33,20 @@
         android:textColorHint="#9EFFFFFF"/>
 
     <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="text"
+        android:hint="Enter Name"
+        android:textColor="@color/white"
+        android:backgroundTint="#CEFFFFFF"
+        android:drawablePadding="5dp"
+        android:layout_below="@id/emailInput"
+        android:layout_marginTop="30dp"
+        android:drawableLeft="@drawable/baseline_person_24"
+        android:textColorHint="#9EFFFFFF"/>
+
+    <EditText
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -40,29 +55,28 @@
         android:textColor="@color/white"
         android:backgroundTint="#CEFFFFFF"
         android:drawablePadding="5dp"
-        android:layout_below="@id/emailInput"
+        android:layout_below="@id/nameInput"
         android:layout_marginTop="30dp"
         android:drawableLeft="@drawable/baseline_lock_24"
         android:textColorHint="#9EFFFFFF"/>
-    
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginBtn"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_below="@id/passwordInput"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:textAllCaps="false"
         android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_rounded_shape" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/navigate_signup"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_below="@id/loginBtn"
         android:textColor="@color/white"
-        android:text="Don't have an Account?"
+        android:text="Already have an Account?"
         android:background="@android:color/transparent"
         android:textAllCaps="false"
         android:layout_marginTop="20dp"
