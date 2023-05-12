@@ -3,18 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.SignUpFragment"
     android:paddingHorizontal="20dp">
 
     <ImageButton
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageView"
+        android:id="@+id/selectImage"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="52dp"
         android:background="@drawable/button_photo_rounded_shape"
         android:src="@drawable/baseline_camera_alt_24"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/selectedImage"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp"
+        app:civ_border_width="0dp"
         />
 
 
@@ -26,7 +37,7 @@
         android:textColor="@color/white"
         android:inputType="textEmailAddress"
         android:hint="Enter Username"
-        android:layout_below="@id/imageView"
+        android:layout_below="@id/selectImage"
         android:backgroundTint="#CEFFFFFF"
         android:drawablePadding="5dp"
         android:drawableLeft="@drawable/baseline_alternate_email_24"
