@@ -7,9 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import dev.isutc.chatapplications.R;
 import dev.isutc.chatapplications.databinding.FragmentSiginBinding;
@@ -47,6 +51,24 @@ public class SignFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.loginBtn.setOnClickListener(e -> {
+            String email = binding.emailInput.getText().toString();
+            String password = binding.passwordInput.getText().toString();
+
+            if (password.isEmpty() || email.isEmpty()) {
+                Toast.makeText(SignFragment.this.getContext(), "Senha e Email devem ser fornecidos!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.i("TESTE", task.getResult().getUser().getUid());
+                        }
+                    })
+                    .addOnFailureListener(ex -> Log.i("TESTE", ex.getMessage()));
+        });
 
         binding.navigateSignup.setOnClickListener(e -> {
             activityCallback.replaceFragment(new SignUpFragment());
