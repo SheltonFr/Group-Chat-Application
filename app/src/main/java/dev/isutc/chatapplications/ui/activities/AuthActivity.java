@@ -15,6 +15,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentsList
 
     private ActivityAuthBinding binding;
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +23,19 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentsList
         setContentView(binding.getRoot());
 
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(binding.fragmentContainerView.getId(), new SignFragment(), "SIGN")
-                .commit();
+
+        if (savedInstanceState == null) {
+            fragmentManager.beginTransaction()
+                    .add(binding.fragmentContainerView.getId(), new SignFragment(), "SIGN")
+                    .commit();
+        }
+
     }
 
     @Override
     public void replaceFragment(Fragment fragment) {
         fragmentManager.beginTransaction()
                 .replace(binding.fragmentContainerView.getId(), fragment)
-                .addToBackStack(null)
                 .setReorderingAllowed(true)
                 .commit();
     }
