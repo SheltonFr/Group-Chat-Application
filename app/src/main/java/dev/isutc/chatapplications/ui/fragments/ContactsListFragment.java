@@ -1,14 +1,18 @@
 package dev.isutc.chatapplications.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +27,7 @@ import java.util.List;
 import dev.isutc.chatapplications.R;
 import dev.isutc.chatapplications.databinding.FragmentContactsListBinding;
 import dev.isutc.chatapplications.models.User;
+import dev.isutc.chatapplications.ui.activities.ChatActivity;
 import dev.isutc.chatapplications.ui.adapters.ContactsAdapter;
 
 
@@ -44,6 +49,7 @@ public class ContactsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentContactsListBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
@@ -52,6 +58,7 @@ public class ContactsListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fetchUsers();
+
     }
 
     private void fetchUsers() {
@@ -77,7 +84,8 @@ public class ContactsListFragment extends Fragment {
                         });
 
                         users.forEach(user -> System.out.println("My Name: " + user.getUsername()));
-                        adapter = new ContactsAdapter(users);
+//                        adapter = new ContactsAdapter(users); // todo: UNCOMMENT
+                        adapter = new ContactsAdapter(users, item -> startActivity(new Intent(getContext(), ChatActivity.class))); //todo: DELETE
                         binding.contactsList.setAdapter(adapter);
                     }
                 });

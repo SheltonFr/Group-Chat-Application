@@ -26,4 +26,6 @@ public class ChatsListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_chats_list, container, false);
     }
 
+
+
 }
