@@ -53,4 +53,7 @@ dependencies {
 
     // Lib para ImageView Redonda
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Lib para baixar e tratar imagens
+    implementation 'com.squareup.picasso:picasso:2.8'
 }
