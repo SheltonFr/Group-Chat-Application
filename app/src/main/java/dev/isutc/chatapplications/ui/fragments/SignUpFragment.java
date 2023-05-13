@@ -1,5 +1,6 @@
 package dev.isutc.chatapplications.ui.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.UUID;
 
+import dev.isutc.chatapplications.MainActivity;
 import dev.isutc.chatapplications.databinding.FragmentSignUpBinding;
 import dev.isutc.chatapplications.models.User;
 import dev.isutc.chatapplications.ui.listeners.AuthFragmentsListener;
@@ -87,7 +89,19 @@ public class SignUpFragment extends Fragment {
 
                             FirebaseFirestore.getInstance().collection("users")
                                     .add(user)
-                                    .addOnSuccessListener(documentReference -> Log.i("TESTE", documentReference.getId())).addOnFailureListener(e -> Log.i("TESTE", e.getMessage()));
+                                    .addOnSuccessListener(documentReference -> {
+
+                                        Log.i("TESTE", documentReference.getId());
+
+                                        Intent intent = new Intent(SignUpFragment.this.getContext(), MainActivity.class);
+
+                                        // Informa que a activity actual deve ser removida da stak de navegação
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                        startActivity(intent);
+
+                                    })
+                                    .addOnFailureListener(e -> Log.i("TESTE", e.getMessage()));
                         }))
                 .addOnFailureListener(e -> Log.i("TESTE", e.getMessage()));
     }

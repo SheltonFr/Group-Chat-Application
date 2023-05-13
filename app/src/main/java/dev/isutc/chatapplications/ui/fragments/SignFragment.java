@@ -1,6 +1,7 @@
 package dev.isutc.chatapplications.ui.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import dev.isutc.chatapplications.MainActivity;
 import dev.isutc.chatapplications.R;
 import dev.isutc.chatapplications.databinding.FragmentSiginBinding;
 import dev.isutc.chatapplications.ui.listeners.AuthFragmentsListener;
@@ -65,6 +67,9 @@ public class SignFragment extends Fragment {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Log.i("TESTE", task.getResult().getUser().getUid());
+                            Intent intent = new Intent(SignFragment.this.getContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         }
                     })
                     .addOnFailureListener(ex -> Log.i("TESTE", ex.getMessage()));
