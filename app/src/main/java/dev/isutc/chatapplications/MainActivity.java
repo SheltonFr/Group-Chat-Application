@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -19,9 +21,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
         verifyAuthentication();
+
+        binding.topAppBar.setOnMenuItemClickListener(item -> {
+            if(item.getItemId() == R.id.log_out) {
+                Log.i("TESTE", "LOGOUT");
+                FirebaseAuth.getInstance().signOut();
+                verifyAuthentication();
+            }
+
+            return true;
+        });
     }
 
     private void verifyAuthentication() {
@@ -31,6 +41,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
-
 }

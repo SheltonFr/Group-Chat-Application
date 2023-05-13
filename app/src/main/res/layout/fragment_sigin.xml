@@ -24,7 +24,7 @@
         android:layout_marginTop="50dp"
         android:textColor="@color/white"
         android:inputType="textEmailAddress"
-        android:hint="Enter Username"
+        android:hint="Enter Email"
         android:layout_below="@id/selectImage"
         android:backgroundTint="#CEFFFFFF"
         android:drawablePadding="5dp"
