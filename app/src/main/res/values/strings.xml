@@ -2,4 +2,6 @@
     <string name="app_name">Chat Application</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="send_btn_text">SEND</string>
+    <string name="message_tv_hint">Write your message here</string>
 </resources>
