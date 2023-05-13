@@ -72,7 +72,11 @@ public class SignFragment extends Fragment {
                             startActivity(intent);
                         }
                     })
-                    .addOnFailureListener(ex -> Log.i("TESTE", ex.getMessage()));
+                    .addOnFailureListener(ex -> {
+                        Toast.makeText(SignFragment.this.getContext(),"Credenciais Incorretas. Tente Novamente!", Toast.LENGTH_SHORT).show();
+                        Log.i("TESTE", ex.getMessage());
+
+                    } );
         });
 
         binding.navigateSignup.setOnClickListener(e -> {
