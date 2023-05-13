@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -67,8 +68,12 @@ public class ContactsListFragment extends Fragment {
                         List<DocumentSnapshot> docs = value.getDocuments();
                         docs.forEach(doc -> {
                             User user = doc.toObject(User.class);
-                            users.add(user);
-                            Log.i("TESTE", user.getUsername());
+
+                            if (!user.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                                users.add(user);
+                                Log.i("TESTE", user.getUsername());
+                            }
+
                         });
 
                         users.forEach(user -> System.out.println("My Name: " + user.getUsername()));
@@ -76,6 +81,11 @@ public class ContactsListFragment extends Fragment {
                         binding.contactsList.setAdapter(adapter);
                     }
                 });
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

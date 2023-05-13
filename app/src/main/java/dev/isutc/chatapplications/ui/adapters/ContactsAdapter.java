@@ -41,6 +41,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         return users.size();
     }
 
+
+
     class ContactsViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView imageView;
@@ -52,6 +54,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             username = itemView.findViewById(R.id.txt_username);
 
         }
+
+
 
         public void bind(User user) {
             username.setText(user.getUsername());
