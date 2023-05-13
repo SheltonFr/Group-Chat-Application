@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +20,21 @@ import dev.isutc.chatapplications.models.User;
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder> {
 
     List<User> users;
+    private OnItemClickListener listener;
 
     public ContactsAdapter(List<User> users) {
         this.users = users;
+    }
+
+    //todo: TO BE REMOVED
+    public ContactsAdapter(List<User> users, OnItemClickListener onItemClickListener) {
+        this.users = users;
+        this.listener = onItemClickListener;
+    }
+
+    //todo: TO BE REMOVED
+    public interface OnItemClickListener {
+        void onItemClick(User item);
     }
 
     @NonNull
@@ -33,7 +46,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
     @Override
     public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
-        holder.bind(users.get(position));
+//        holder.bind(users.get(position)); //todo: UNCOMMENT
+        holder.bind(users.get(position), listener);//todo: DELETE
     }
 
     @Override
@@ -55,13 +69,20 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
         }
 
-
-
+        //todo: DELETE
+        public void bind(User user, OnItemClickListener listener) {
+            username.setText(user.getUsername());
+            Picasso.get()
+                    .load(user.getProfileUrl())
+                    .into(imageView);
+            username.setOnClickListener(view -> listener.onItemClick(user));
+        }
         public void bind(User user) {
             username.setText(user.getUsername());
             Picasso.get()
                     .load(user.getProfileUrl())
                     .into(imageView);
         }
+
     }
 }
