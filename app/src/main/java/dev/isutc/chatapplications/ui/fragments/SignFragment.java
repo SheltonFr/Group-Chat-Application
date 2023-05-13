@@ -68,6 +68,7 @@ public class SignFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.i("TESTE", task.getResult().getUser().getUid());
                             Intent intent = new Intent(SignFragment.this.getContext(), MainActivity.class);
+                            // SignFragment.this.getContext() lanca excecoes algumas vezes, nao sei porque
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
