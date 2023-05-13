@@ -111,7 +111,7 @@ public class SignUpFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 0) {
+        if (requestCode == 0 && data != null) {
             profileUri = data.getData();
 
             Bitmap bitmap;
