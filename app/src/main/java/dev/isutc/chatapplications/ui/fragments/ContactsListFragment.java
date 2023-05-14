@@ -4,16 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -24,7 +20,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.isutc.chatapplications.R;
 import dev.isutc.chatapplications.databinding.FragmentContactsListBinding;
 import dev.isutc.chatapplications.models.User;
 import dev.isutc.chatapplications.ui.activities.ChatActivity;
@@ -84,8 +79,12 @@ public class ContactsListFragment extends Fragment {
                         });
 
                         users.forEach(user -> System.out.println("My Name: " + user.getUsername()));
-//                        adapter = new ContactsAdapter(users); // todo: UNCOMMENT
-                        adapter = new ContactsAdapter(users, item -> startActivity(new Intent(getContext(), ChatActivity.class))); //todo: DELETE
+
+                        adapter = new ContactsAdapter(users, user -> {
+                            Intent intent = new Intent(getContext(), ChatActivity.class);
+                            intent.putExtra("user", user);
+                            startActivity(intent);
+                        });
                         binding.contactsList.setAdapter(adapter);
                     }
                 });

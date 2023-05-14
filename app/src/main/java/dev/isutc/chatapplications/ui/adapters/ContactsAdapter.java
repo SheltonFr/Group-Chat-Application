@@ -26,13 +26,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         this.users = users;
     }
 
-    //todo: TO BE REMOVED
     public ContactsAdapter(List<User> users, OnItemClickListener onItemClickListener) {
         this.users = users;
         this.listener = onItemClickListener;
     }
 
-    //todo: TO BE REMOVED
     public interface OnItemClickListener {
         void onItemClick(User item);
     }
@@ -54,7 +52,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     public int getItemCount() {
         return users.size();
     }
-
 
 
     class ContactsViewHolder extends RecyclerView.ViewHolder {

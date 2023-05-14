@@ -1,21 +1,181 @@
 package dev.isutc.chatapplications.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.EditText;
 
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.isutc.chatapplications.databinding.ActivityChatBinding;
+import dev.isutc.chatapplications.models.Message;
+import dev.isutc.chatapplications.models.User;
+import dev.isutc.chatapplications.ui.adapters.MessageAdapter;
 
 public class ChatActivity extends AppCompatActivity {
-    private ActivityChatBinding chatBinding;
+
+    private MessageAdapter adapter;
+    private List<Message> messages;
+    private User user;
+    private User me;
+    private EditText editChat;
+    private ActivityChatBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chatBinding = ActivityChatBinding.inflate(getLayoutInflater());
-        setContentView(chatBinding.getRoot());
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
+        messages = new ArrayList<>();
+
+        binding.btnChat.setOnClickListener(view -> {
+            if (!binding.editChat.getText().toString().isEmpty()) {
+                sendMessage();
+            }
+        });
+
+        //binding.topAppBar.setNavigationIcon(R.drawable.back);
+        // todo: Add the back arrow icon
+        user = getIntent().getExtras().getParcelable("user");
+        binding.topAppBar.setTitle(user.getUsername());
+
+
+        FirebaseFirestore.getInstance()
+                .collection("/users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    me = documentSnapshot.toObject(User.class);
+                    fetchMessages();
+                    binding.recyclerChat.setLayoutManager(new LinearLayoutManager(this));
+                    binding.recyclerChat.setAdapter(new MessageAdapter(messages, true));
+                }).addOnFailureListener(e -> Log.i("ERROR GETTING ME", e.getMessage(), e));
 
     }
+
+    private void fetchMessages() {
+        if (me != null) {
+
+            String fromId = me.getUid();
+            String toId = user.getUid();
+
+            FirebaseFirestore.getInstance().collection("/conversations")
+                    .document(fromId)
+                    .collection(toId)
+                    .orderBy("timestamp", Query.Direction.ASCENDING)
+                    .addSnapshotListener((queryDocumentSnapshots, e) -> {
+
+
+                        List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
+
+                        if (documentChanges != null) {
+                            for (DocumentChange doc : documentChanges) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                    Message message = doc.getDocument().toObject(Message.class);
+                                    Log.d("MESSAGES", message.getText());
+                                    messages.add(message);
+                                }
+                            }
+                        }
+                    });
+
+        }
+    }
+
+    private void sendMessage() {
+
+        final String fromId = FirebaseAuth.getInstance().getUid();
+        final String toId = user.getUid();
+        long timestamp = System.currentTimeMillis();
+
+        final Message message = new Message();
+        message.setFromId(fromId);
+        message.setToId(toId);
+        message.setTimestamp(timestamp);
+        message.setText(binding.editChat.getText().toString());
+
+        if (!message.getText().isEmpty()) {
+            FirebaseFirestore.getInstance()
+                    .collection("/conversations")
+                    .document(fromId)
+                    .collection(toId)
+                    .add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("MESSAGE SENT", documentReference.getId());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("MESSAGE NOT SENT", e.getMessage());
+                        }
+                    });
+
+            FirebaseFirestore.getInstance()
+                    .collection("/conversations")
+                    .document(toId)
+                    .collection(fromId)
+                    .add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+
+                            Log.d("Teste", "MESSAGE RECEIVED?");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("Teste", e.getMessage(), e);
+                        }
+                    });
+        }
+
+        binding.editChat.setText("");
+    }
+
+
+//    private class MessageItem extends Item<ViewHolder> {
+//
+//        private final Message message;
+//
+//        private MessageItem(Message message) {
+//            this.message = message;
+//        }
+//
+//        @Override
+//        public void bind(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+//            TextView txtMsg = viewHolder.itemView.findViewById(R.id.txt_msg);
+//            ImageView imgMessage = viewHolder.itemView.findViewById(R.id.img_message_user);
+//
+//            txtMsg.setText(message.getText());
+//
+//            Picasso.get()
+//                    .load(message.getFromId().equals(FirebaseAuth.getInstance().getUid())
+//                            ? me.getProfileUrl()
+//                            : user.getProfileUrl())
+//                    .into(imgMessage);
+//        }
+//
+//        @Override
+//        public int getLayout() {
+//            return message.getFromId().equals(FirebaseAuth.getInstance().getUid())
+//                    ? R.layout.item_from_message
+//                    : R.layout.item_to_message;
+//        }
+//    }
 }

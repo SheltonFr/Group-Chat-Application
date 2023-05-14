@@ -88,10 +88,11 @@ public class SignUpFragment extends Fragment {
                             User user = new User(uuid, username, profileUrl);
 
                             FirebaseFirestore.getInstance().collection("users")
-                                    .add(user)
+                                    .document(uuid)
+                                    .set(user)
                                     .addOnSuccessListener(documentReference -> {
 
-                                        Log.i("TESTE", documentReference.getId());
+//                                        Log.i("TESTE", documentReference.getId());
 
                                         Intent intent = new Intent(SignUpFragment.this.getContext(), MainActivity.class);
 
