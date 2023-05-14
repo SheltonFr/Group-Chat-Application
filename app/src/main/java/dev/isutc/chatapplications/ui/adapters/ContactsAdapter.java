@@ -63,7 +63,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             super(itemView);
             imageView = itemView.findViewById(R.id.profile_image);
             username = itemView.findViewById(R.id.txt_username);
-
         }
 
         //todo: DELETE

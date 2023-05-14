@@ -41,6 +41,10 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         messages = new ArrayList<>();
+        adapter = new MessageAdapter();
+
+        binding.recyclerChat.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerChat.setAdapter(adapter);
 
         binding.btnChat.setOnClickListener(view -> {
             if (!binding.editChat.getText().toString().isEmpty()) {
@@ -61,8 +65,7 @@ public class ChatActivity extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     me = documentSnapshot.toObject(User.class);
                     fetchMessages();
-                    binding.recyclerChat.setLayoutManager(new LinearLayoutManager(this));
-                    binding.recyclerChat.setAdapter(new MessageAdapter(messages, true));
+//                    binding.recyclerChat.setAdapter(new MessageAdapter(messages, true));
                 }).addOnFailureListener(e -> Log.i("ERROR GETTING ME", e.getMessage(), e));
 
     }
@@ -78,8 +81,6 @@ public class ChatActivity extends AppCompatActivity {
                     .collection(toId)
                     .orderBy("timestamp", Query.Direction.ASCENDING)
                     .addSnapshotListener((queryDocumentSnapshots, e) -> {
-
-
                         List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
 
                         if (documentChanges != null) {
@@ -88,6 +89,8 @@ public class ChatActivity extends AppCompatActivity {
                                     Message message = doc.getDocument().toObject(Message.class);
                                     Log.d("MESSAGES", message.getText());
                                     messages.add(message);
+                                    adapter.setChatMessages(messages);
+//                                    adapter.addMessage(message);
                                 }
                             }
                         }
@@ -117,6 +120,7 @@ public class ChatActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
+
                             Log.d("MESSAGE SENT", documentReference.getId());
                         }
                     }).addOnFailureListener(new OnFailureListener() {
