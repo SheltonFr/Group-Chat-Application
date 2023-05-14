@@ -139,7 +139,7 @@ public class ChatActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
 
-                            Log.d("Teste", "MESSAGE RECEIVED?");
+                            Log.d("MESSAGE RECEIVED", documentReference.getId());
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

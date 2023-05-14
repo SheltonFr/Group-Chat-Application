@@ -23,11 +23,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:background="@drawable/bg_edittext_rounded"
+        android:background="@drawable/their_message"
         android:maxWidth="240dp"
         android:padding="8dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/img_message_user"
         app:layout_constraintTop_toTopOf="@+id/img_message_user" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
