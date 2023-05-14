@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import dev.isutc.chatapplications.R;
+
 import dev.isutc.chatapplications.databinding.ActivityChatBinding;
 
 public class ChatActivity extends AppCompatActivity {
