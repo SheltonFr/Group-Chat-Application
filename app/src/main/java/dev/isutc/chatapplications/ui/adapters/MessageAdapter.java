@@ -25,19 +25,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
     List<Message> messages = new ArrayList<>();
-    private boolean isSender;
 
     public MessageAdapter() {}
-
-    public MessageAdapter(List<Message> messages, boolean isSender) {
-        this.messages = messages;
-        this.isSender = isSender;
-    }
 
     @Override
     public int getItemViewType(int position) {
         boolean isMine = this.messages.get(position).getFromId().equals(FirebaseAuth.getInstance().getUid());
-//        return isSender ? R.layout.sent_message_item : R.layout.received_message_item;
         return !isMine ? R.layout.sent_message_item : R.layout.received_message_item;
     }
 
