@@ -45,13 +45,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (isSender) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.sent_message_item, parent, false);
+
+        if (viewType != R.layout.sent_message_item) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sent_message_item, parent, false);
             return new SenderViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.received_message_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.received_message_item, parent, false);
             return new ReceiverViewHolder(view);
         }
     }
@@ -76,10 +75,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return messages.size();
     }
 
-//    public void addMessage(Message message, boolean isSender){
-//        this.messages.add(message);
-//        notifyDataSetChanged();
-//    }
+
     public void setChatMessages(List<Message> chatMessages){
         this.messages = chatMessages;
         notifyDataSetChanged();
