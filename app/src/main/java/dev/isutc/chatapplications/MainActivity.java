@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupTabs() {
         tabLayout.addTab(tabLayout.newTab().setText("Contacts"));
-        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
 
         FragmentManager fm = getSupportFragmentManager();
 

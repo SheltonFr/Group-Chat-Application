@@ -17,11 +17,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return position == 0 ? new ContactsListFragment() : new ChatsListFragment();
+        return new ContactsListFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 1;
     }
 }
