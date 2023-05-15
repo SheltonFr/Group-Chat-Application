@@ -77,8 +77,8 @@ public class ChatActivity extends AppCompatActivity {
             String toId = user.getUid();
 
             FirebaseFirestore.getInstance().collection("/conversations")
-                    .document(fromId)
-                    .collection(toId)
+                    .document(fromId) /*fromId*/
+                    .collection(toId) /*toId*/
                     .orderBy("timestamp", Query.Direction.ASCENDING)
                     .addSnapshotListener((queryDocumentSnapshots, e) -> {
                         List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
@@ -152,34 +152,4 @@ public class ChatActivity extends AppCompatActivity {
         binding.editChat.setText("");
     }
 
-
-//    private class MessageItem extends Item<ViewHolder> {
-//
-//        private final Message message;
-//
-//        private MessageItem(Message message) {
-//            this.message = message;
-//        }
-//
-//        @Override
-//        public void bind(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-//            TextView txtMsg = viewHolder.itemView.findViewById(R.id.txt_msg);
-//            ImageView imgMessage = viewHolder.itemView.findViewById(R.id.img_message_user);
-//
-//            txtMsg.setText(message.getText());
-//
-//            Picasso.get()
-//                    .load(message.getFromId().equals(FirebaseAuth.getInstance().getUid())
-//                            ? me.getProfileUrl()
-//                            : user.getProfileUrl())
-//                    .into(imgMessage);
-//        }
-//
-//        @Override
-//        public int getLayout() {
-//            return message.getFromId().equals(FirebaseAuth.getInstance().getUid())
-//                    ? R.layout.item_from_message
-//                    : R.layout.item_to_message;
-//        }
-//    }
 }
